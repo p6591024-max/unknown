@@ -89,25 +89,20 @@
     a:hover {
       text-decoration: underline;
     }
-    /* step2: 時計用 */
-   /* 既存の #clock-container に追記 */
+/* step2: Amazon風の時計 */
 #clock-container {
-  background-color: black;
-  color: red;
-  font-family: 'Courier New', monospace;
-  font-size: 4em;
+  background-color: #fff;
+  color: #111;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.5em;
   text-align: center;
-  padding: 40px 0;
-  border-radius: 8px;
-  user-select: none;
+  padding: 12px 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   margin-bottom: 20px;
-  animation: blink 1s infinite; /* 点滅アニメーション */
 }
 
-@keyframes blink {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
-}
 
   </style>
 </head>
@@ -135,25 +130,33 @@
         `;
       }
 
-      if (step === 2) {
-        page.innerHTML = `
-          <div id="clock-container"></div>
-          <p>「おめでとうございます！<br>
-          今回のお買い物で <strong>10000円分のポイント</strong> を獲得できます。」</p>
-          <button onclick="showPage(3)">ポイントを受け取る</button>
-        `;
+     if (step === 2) {
+  page.innerHTML = `
+    <div id="clock-container"></div>
+    <p>「おめでとうございます！<br>
+    今回のお買い物で <strong>10000円分のポイント</strong> を獲得できます。」</p>
+    <button onclick="showPage(3)">ポイントを受け取る</button>
+  `;
+  
+  // 時計スクリプトをここで実行
+  function updateClock() {
+    const now = new Date();
+    const days = ['日', '月', '火', '水', '木', '金', '土'];
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2,'0');
+    const date = String(now.getDate()).padStart(2,'0');
+    const day = days[now.getDay()];
+    const hours = String(now.getHours()).padStart(2,'0');
+    const minutes = String(now.getMinutes()).padStart(2,'0');
+    const seconds = String(now.getSeconds()).padStart(2,'0');
 
-        function updateClock() {
-          const now = new Date();
-          const hours = String(now.getHours()).padStart(2,'0');
-          const minutes = String(now.getMinutes()).padStart(2,'0');
-          const seconds = String(now.getSeconds()).padStart(2,'0');
-          document.getElementById('clock-container').textContent = `${hours}:${minutes}:${seconds}`;
-        }
+    document.getElementById('clock-container').textContent =
+      `${year}年${month}月${date}日 (${day}) ${hours}:${minutes}:${seconds}`;
+  }
 
-        setInterval(updateClock, 1000);
-        updateClock();
-      }
+  setInterval(updateClock, 1000);
+  updateClock();
+}
 
       if (step === 3) {
         page.innerHTML = `
