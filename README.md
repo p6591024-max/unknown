@@ -109,7 +109,7 @@
 
       if (step === 1) {
         page.innerHTML = `
-          <h1>教育用 詐欺体験サイト</h1>
+          <h1>詐欺模擬体験サイト</h1>
           <p>このサイトは <strong>安全に詐欺体験を学ぶための教材</strong> です。<br>
           実際の入力内容は保存も送信もされません。</p>
           <button onclick="showPage(2)">体験を開始する</button>
