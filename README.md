@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>教育用 詐欺体験サイト</title>
+  <title> 詐欺模擬体験サイト</title>
   <style>
     body {
       font-family: Arial, Helvetica, sans-serif;
