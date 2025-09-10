@@ -118,7 +118,42 @@
 
       if (step === 2) {
         page.innerHTML = `
-          <h2>📩 新着メール</h2>
+          <html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>強迫的時計</title>
+<style>
+  body {
+    background-color: black;
+    color: red;
+    font-family: 'Courier New', monospace;
+    font-size: 5em;
+    text-align: center;
+    margin-top: 20vh;
+    user-select: none;
+  }
+</style>
+</head>
+<body>
+
+<div id="clock"></div>
+
+<script>
+  function updateClock() {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2,'0');
+    const minutes = String(now.getMinutes()).padStart(2,'0');
+    const seconds = String(now.getSeconds()).padStart(2,'0');
+    document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+  }
+
+  setInterval(updateClock, 1000);
+  updateClock(); // 最初に即表示
+</script>
+
+</body>
+</html>
           <p>「おめでとうございます！<br>
           今回のお買い物で <strong>10000円分のポイント</strong> を獲得できます。」</p>
           <button onclick="showPage(3)">ポイントを受け取る</button>
