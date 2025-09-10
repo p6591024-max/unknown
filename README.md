@@ -2,241 +2,202 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>教育用詐欺体験サイト</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>教育用 詐欺体験サイト</title>
   <style>
     body {
       font-family: Arial, Helvetica, sans-serif;
       margin: 0;
-      padding: 0;
-      background: #f8f9fa;
+      background: #f2f2f2;
+      color: #111;
     }
-    .page {
-      display: none;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
+    header.fake-url {
+      background: #e6e6e6;
+      padding: 8px 16px;
+      font-size: 14px;
+      border-bottom: 1px solid #ccc;
+      color: #555;
     }
-    .active { display: flex; }
+    nav.fake-nav {
+      background: #232f3e;
+      color: #fff;
+      padding: 10px 16px;
+      font-size: 16px;
+      font-weight: bold;
+    }
     .container {
-      background: #fff;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       max-width: 420px;
-      width: 100%;
+      margin: 40px auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     }
-    h1, h2, p {
-      margin-bottom: 16px;
-      color: #222;
+    h1, h2 {
+      font-size: 18px;
+      margin-bottom: 14px;
+      color: #111;
     }
     button {
+      display: block;
       width: 100%;
       padding: 12px;
-      background: #ffa41c;
+      margin-top: 12px;
+      background: #ff9900;
+      color: #111;
       border: none;
       border-radius: 8px;
       font-size: 16px;
       font-weight: bold;
-      color: #111;
       cursor: pointer;
-      margin-top: 12px;
+      transition: all 0.2s;
     }
-    button:hover { background: #ff8c00; }
+    button:hover {
+      background: #e68a00;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
     input {
       width: 100%;
       padding: 10px;
-      margin-bottom: 12px;
-      border: 1px solid #ccc;
+      margin: 8px 0;
+      border: 1px solid #aaa;
       border-radius: 6px;
       font-size: 14px;
     }
-    .fake-urlbar {
-      background: #e9ecef;
-      padding: 6px 12px;
-      font-size: 14px;
-      border-bottom: 1px solid #ccc;
-      color: #444;
-    }
-    .notifications {
-      position: fixed;
-      top: 16px;
-      right: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      z-index: 999;
-    }
-    .notice {
-      padding: 12px 16px;
-      border-radius: 10px;
-      color: #fff;
-      font-size: 14px;
-      min-width: 220px;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
-      animation: slideIn 0.3s ease-out;
-    }
-    .success { background: #28a745; }
-    .error { background: #dc3545; }
-    .info { background: #007bff; }
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateX(50px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
     .loading {
       text-align: center;
-      font-size: 16px;
+      font-size: 15px;
       color: #333;
     }
-    .spinner {
-      border: 4px solid #f3f3f3;
-      border-top: 4px solid #ffa41c;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      margin: 20px auto;
-      animation: spin 1s linear infinite;
+    .warning {
+      background: #ffeaea;
+      border: 1px solid #dd4444;
+      padding: 16px;
+      border-radius: 8px;
+      color: #b20000;
+      font-weight: bold;
+      margin-bottom: 16px;
     }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    .summary {
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    a {
+      color: #0066c0;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
-  <!-- 説明ページ -->
-  <div id="page-intro" class="page active">
-    <div class="container">
-      <h1>教育用詐欺体験サイト</h1>
-      <p>これは安全な体験サイトです。<br>
-        実際の詐欺手口を疑似的に体験し、だまされない力を身につけましょう。</p>
-      <button onclick="goPage('page-mail')">体験を開始する</button>
-    </div>
-  </div>
 
-  <!-- 偽メールページ -->
-  <div id="page-mail" class="page">
-    <div class="container">
-      <h2>📩 新着メール</h2>
-      <p><b>差出人：</b> Amazon ポイントキャンペーン<br>
-         <b>件名：</b> 買い物で10000円分ポイント獲得！</p>
-      <p>お客様限定で特別なポイントを進呈します。<br>
-         下のボタンを押してログインし、受け取り手続きをしてください。</p>
-      <button onclick="goPage('page-login')">ポイントを受け取る</button>
-    </div>
-  </div>
+  <header class="fake-url" id="fakeUrlBar">
+    https://www.amaz0n-co-jp.com/claim
+  </header>
+  <nav class="fake-nav">Amazen ポイントキャンペーン</nav>
 
-  <!-- 偽ログインページ -->
-  <div id="page-login" class="page">
-    <div class="container">
-      <div class="fake-urlbar">https://www.amaz0n.co-jp.com/claim</div>
-      <h2>Amazon ログイン</h2>
-      <input type="text" id="username" placeholder="メールアドレスを入力" />
-      <input type="password" id="password" placeholder="パスワードを入力" />
-      <button onclick="handleLogin()">ログイン</button>
-    </div>
-  </div>
-
-  <!-- 偽認証ページ -->
-  <div id="page-auth" class="page">
-    <div class="container">
-      <div class="fake-urlbar">https://www.amaz0n.co-jp.com/auth</div>
-      <h2>追加認証が必要です</h2>
-      <p>セキュリティのため、SMSで送信された6桁のコードを入力してください。</p>
-      <input type="text" id="authcode" placeholder="6桁のコードを入力" maxlength="6"/>
-      <button onclick="handleAuth()">認証する</button>
-    </div>
-  </div>
-
-  <!-- ローディングページ -->
-  <div id="page-loading" class="page">
-    <div class="container loading">
-      <div class="fake-urlbar">https://www.amaz0n.co-jp.com/auth</div>
-      <div class="spinner"></div>
-      <p>認証中… 少々お待ちください</p>
-    </div>
-  </div>
-
-  <!-- ネタばらしページ -->
-  <div id="page-reveal" class="page">
-    <div class="container">
-      <h2>⚠️ これは詐欺でした！</h2>
-      <p>もし本当に入力していたら、情報が盗まれていた可能性があります。</p>
-      <ul>
-        <li>URLが本物と違う（amaz0nなど偽ドメイン）</li>
-        <li>「10000円ポイント」など甘い誘い</li>
-        <li>公式では絶対にメールでログイン要求はしない</li>
-      </ul>
-      <button onclick="goPage('page-end')">学びをまとめる</button>
-    </div>
-  </div>
-
-  <!-- 終了ページ -->
-  <div id="page-end" class="page">
-    <div class="container">
-      <h2>体験お疲れさまでした</h2>
-      <p>今回のような詐欺に気づけるようになれば安心です。<br>
-        詳しい情報は以下の公式サイトを参考にしてください。</p>
-      <ul>
-        <li><a href="https://www.npa.go.jp/" target="_blank">警察庁</a></li>
-        <li><a href="https://www.antiphishing.jp/" target="_blank">フィッシング対策協議会</a></li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- 通知表示 -->
-  <div class="notifications" id="notifications"></div>
+  <div class="container" id="page"></div>
 
   <script>
-    function goPage(id) {
-      document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-      document.getElementById(id).classList.add("active");
-    }
+    const page = document.getElementById("page");
 
-    function pushNotice(type, message) {
-      const container = document.getElementById("notifications");
-      const notice = document.createElement("div");
-      notice.className = "notice " + type;
-      notice.textContent = message;
-      container.appendChild(notice);
-      setTimeout(() => {
-        notice.style.opacity = "0";
-        notice.style.transition = "opacity 0.5s";
-        setTimeout(() => container.removeChild(notice), 500);
-      }, 3500);
-    }
+    function showPage(step) {
+      page.innerHTML = "";
 
-    function handleLogin() {
-      const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value.trim();
-
-      if (!username || username.length < 5 || !password || password.length < 6) {
-        pushNotice("error", "入力内容を確認してください。");
-        return;
+      if (step === 1) {
+        page.innerHTML = `
+          <h1>教育用 詐欺体験サイト</h1>
+          <p>このサイトは <strong>安全に詐欺体験を学ぶための教材</strong> です。<br>
+          実際の入力内容は保存も送信もされません。</p>
+          <button onclick="showPage(2)">体験を開始する</button>
+        `;
       }
 
-      pushNotice("success", `ログインありがとうございます、${username} さん！`);
-      setTimeout(() => {
-        goPage("page-auth");
-      }, 1500);
-    }
-
-    function handleAuth() {
-      const code = document.getElementById("authcode").value.trim();
-      if (code.length !== 6 || isNaN(code)) {
-        pushNotice("error", "6桁の数字を入力してください。");
-        return;
+      if (step === 2) {
+        page.innerHTML = `
+          <h2>📩 新着メール</h2>
+          <p>「おめでとうございます！<br>
+          今回のお買い物で <strong>10000円分のポイント</strong> を獲得できます。」</p>
+          <button onclick="showPage(3)">ポイントを受け取る</button>
+        `;
       }
 
-      pushNotice("info", "コードを確認中です…");
-      goPage("page-loading");
+      if (step === 3) {
+        page.innerHTML = `
+          <h2>ログイン</h2>
+          <form id="loginForm">
+            <input type="email" id="email" placeholder="Eメールアドレス" required />
+            <input type="password" id="password" placeholder="パスワード" required minlength="4"/>
+            <button type="submit">ログイン</button>
+          </form>
+        `;
+        document.getElementById("loginForm").addEventListener("submit", function(e) {
+          e.preventDefault();
+          const email = document.getElementById("email").value.trim();
+          const pass = document.getElementById("password").value.trim();
+          if (!email || !pass) {
+            alert("入力内容を確認してください。");
+            return;
+          }
+          showPage(4);
+        });
+      }
 
-      setTimeout(() => {
-        goPage("page-reveal");
-      }, 3000);
+      if (step === 4) {
+        page.innerHTML = `
+          <div class="loading">
+            <p>ログインありがとうございます。</p>
+            <p>ただいまご注文内容を確認中ですので、しばらくお待ちください…</p>
+            <p id="dots">●</p>
+          </div>
+        `;
+        let dots = document.getElementById("dots");
+        let count = 1;
+        const interval = setInterval(() => {
+          dots.textContent = "●".repeat((count % 5) + 1);
+          count++;
+        }, 500);
+        setTimeout(() => {
+          clearInterval(interval);
+          showPage(5);
+        }, 3000);
+      }
+
+      if (step === 5) {
+        page.innerHTML = `
+          <div class="warning">
+            ⚠️ これは詐欺の手口を再現した体験でした！
+          </div>
+          <div class="summary">
+            <p>実際の詐欺サイトにはこんな特徴があります：</p>
+            <ul>
+              <li>URLが本物に似ているが一部違う</li>
+              <li>「高額ポイント」「限定」など甘い誘い</li>
+              <li>公式サイトでは不要な情報を求める</li>
+            </ul>
+          </div>
+          <button onclick="showPage(6)">次へ</button>
+        `;
+      }
+
+      if (step === 6) {
+        page.innerHTML = `
+          <h2>学習のまとめ</h2>
+          <p>詐欺を見抜くには、<strong>URL・内容・要求情報</strong> を冷静に確認することが大切です。</p>
+          <p>詳しくはこちらもご確認ください：</p>
+          <ul>
+            <li><a href="https://www.npa.go.jp/bureau/cyber/" target="_blank">警察庁サイバー犯罪対策</a></li>
+            <li><a href="https://www.antiphishing.jp/" target="_blank">フィッシング対策協議会</a></li>
+          </ul>
+          <p>ご体験ありがとうございました。</p>
+        `;
+      }
     }
+
+    showPage(1);
   </script>
 </body>
 </html>
