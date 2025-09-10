@@ -199,22 +199,49 @@
         }, 3000);
       }
 
-      if (step === 5) {
-        page.innerHTML = `
-          <div class="warning">
-            ⚠️ 何か入力！
-          </div>
-          <div class="summary">
-            <p>何か入力：</p>
-            <ul>
-              <li>何か入力</li>
-              <li>何か入力</li>
-              <li>何か入力</li>
-            </ul>
-          </div>
-          <button onclick="showPage(6)">次へ</button>
-        `;
-      }
+     if (step === 5) {
+  page.innerHTML = `
+    <div class="warning">
+      ⚠️ 情報が外部に送信されました！
+    </div>
+    <div class="summary">
+      <p>個人情報の漏洩のフィードバックを送信してください。：</p>
+      <ul>
+        <li>City: Tokyo</li>
+        <li>State: Tokyo</li>
+        <li>Country: Japan</li>
+        <li>Postal: 101-8656</li>
+        <li>Local time: <span id="tokyo-time"></span></li>
+        <li>Timezone: Asia/Tokyo</li>
+        <li>Coordinates: 35.6895,139.6917</li>
+      </ul>
+    </div>
+    <button onclick="showPage(6)">フィードバックを送信する</button>
+  `;
+
+  // 東京の現在日時を「~PM, ~day, September ~, 2025」形式で表示
+  function updateTokyoTime() {
+    const now = new Date();
+
+    // 曜日リスト
+    const weekdays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    const day = weekdays[now.toLocaleString('en-US', { timeZone: 'Asia/Tokyo', weekday: 'short' })];
+
+    // 時間
+    let hours = now.toLocaleString('en-US', { timeZone: 'Asia/Tokyo', hour: 'numeric', hour12: true }).split(' ')[0];
+    const ampm = now.toLocaleString('en-US', { timeZone: 'Asia/Tokyo', hour: 'numeric', hour12: true }).split(' ')[1];
+
+    const date = now.toLocaleString('en-US', { timeZone: 'Asia/Tokyo', day: 'numeric' });
+    const month = now.toLocaleString('en-US', { timeZone: 'Asia/Tokyo', month: 'long' });
+    const year = now.toLocaleString('en-US', { timeZone: 'Asia/Tokyo', year: 'numeric' });
+
+    document.getElementById('tokyo-time').textContent =
+      `${hours}${ampm}, ${day}, ${month} ${date}, ${year}`;
+  }
+
+  setInterval(updateTokyoTime, 1000);
+  updateTokyoTime();
+}
 
       if (step === 6) {
         page.innerHTML = `
