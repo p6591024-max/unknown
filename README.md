@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
@@ -91,17 +90,25 @@
       text-decoration: underline;
     }
     /* step2: 時計用 */
-    #clock-container {
-      background-color: black;
-      color: red;
-      font-family: 'Courier New', monospace;
-      font-size: 4em;
-      text-align: center;
-      padding: 40px 0;
-      border-radius: 8px;
-      user-select: none;
-      margin-bottom: 20px;
-    }
+   /* 既存の #clock-container に追記 */
+#clock-container {
+  background-color: black;
+  color: red;
+  font-family: 'Courier New', monospace;
+  font-size: 4em;
+  text-align: center;
+  padding: 40px 0;
+  border-radius: 8px;
+  user-select: none;
+  margin-bottom: 20px;
+  animation: blink 1s infinite; /* 点滅アニメーション */
+}
+
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
   </style>
 </head>
 <body>
