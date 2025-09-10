@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title> 詐欺模擬体験サイト</title>
+  <title>詐欺模擬体験サイト</title>
   <style>
     body {
       font-family: Arial, Helvetica, sans-serif;
@@ -90,6 +90,18 @@
     a:hover {
       text-decoration: underline;
     }
+    /* step2: 時計用 */
+    #clock-container {
+      background-color: black;
+      color: red;
+      font-family: 'Courier New', monospace;
+      font-size: 4em;
+      text-align: center;
+      padding: 40px 0;
+      border-radius: 8px;
+      user-select: none;
+      margin-bottom: 20px;
+    }
   </style>
 </head>
 <body>
@@ -118,46 +130,22 @@
 
       if (step === 2) {
         page.innerHTML = `
-          <html lang="ja">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>強迫的時計</title>
-<style>
-  body {
-    background-color: black;
-    color: red;
-    font-family: 'Courier New', monospace;
-    font-size: 5em;
-    text-align: center;
-    margin-top: 20vh;
-    user-select: none;
-  }
-</style>
-</head>
-<body>
-
-<div id="clock"></div>
-
-<script>
-  function updateClock() {
-    const now = new Date();
-    const hours = String(now.getHours()).padStart(2,'0');
-    const minutes = String(now.getMinutes()).padStart(2,'0');
-    const seconds = String(now.getSeconds()).padStart(2,'0');
-    document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
-  }
-
-  setInterval(updateClock, 1000);
-  updateClock(); // 最初に即表示
-</script>
-
-</body>
-</html>
+          <div id="clock-container"></div>
           <p>「おめでとうございます！<br>
           今回のお買い物で <strong>10000円分のポイント</strong> を獲得できます。」</p>
           <button onclick="showPage(3)">ポイントを受け取る</button>
         `;
+
+        function updateClock() {
+          const now = new Date();
+          const hours = String(now.getHours()).padStart(2,'0');
+          const minutes = String(now.getMinutes()).padStart(2,'0');
+          const seconds = String(now.getSeconds()).padStart(2,'0');
+          document.getElementById('clock-container').textContent = `${hours}:${minutes}:${seconds}`;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
       }
 
       if (step === 3) {
@@ -200,25 +188,6 @@
           showPage(5);
         }, 3000);
       }
-         <div id="page-auth" class="page">
-    <div class="container">
-      <div class="fake-urlbar">https://www.amaz0n.co-jp.com/auth</div>
-      <h2>追加認証が必要です</h2>
-      <p>セキュリティのため、SMSで送信された6桁のコードを入力してください。</p>
-      <input type="text" id="authcode" placeholder="6桁のコードを入力" maxlength="6"/>
-      <button onclick="handleAuth()">認証する</button>
-    </div>
-  </div>
-
-       <!-- ローディングページ -->
-  <div id="page-loading" class="page">
-    <div class="container loading">
-      <div class="fake-urlbar">https://www.amaz0n.co-jp.com/auth</div>
-      <div class="spinner"></div>
-      <p>認証中… 少々お待ちください</p>
-    </div>
-  </div>
-
 
       if (step === 5) {
         page.innerHTML = `
