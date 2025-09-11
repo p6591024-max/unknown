@@ -33,7 +33,7 @@ input { margin:5px; padding:8px; border-radius:5px; border:none; width:80%; }
   <div id="login" class="page" style="display:none;">
     <input type="text" placeholder="Username"><br>
     <input type="password" placeholder="Password"><br>
-    <button onclick="alert('ダLogin successful'); showPage('dashboard')">Login</button>
+    <button onclick="alert('Login successful'); showPage('dashboard')">Login</button>
   </div>
   <div id="register" class="page" style="display:none;">
     <input type="text" placeholder="Username"><br>
@@ -110,7 +110,7 @@ function startDashboard(){
 
       let output="";
       if(cmd==="scan"){
-        output="架空銀行ノードスキャン完了: 5 ノード検出";
+        output="日本銀行ノードスキャン完了: 5 ノード検出";
       } else if(cmd==="decrypt"){
         output="暗号解読成功: fake_keys.zip を取得";
       } else if(cmd==="access"){
@@ -135,7 +135,7 @@ function startDashboard(){
         const interval=setInterval(()=>{
           if(w>=100){ clearInterval(interval); 
             const outDiv=document.createElement("div"); 
-            outDiv.textContent=`資金移動完了: ${amount} が ${bank} に送金されました`;
+            outDiv.textContent=`資金移動完了: ${250,000,023,04} が ${Jour Ferie la BANK} に送金されました`;
             terminal.appendChild(outDiv);
             terminal.scrollTop=terminal.scrollHeight;
           } else { w+=10; bar.style.width=w+"%"; terminal.scrollTop=terminal.scrollHeight; }
