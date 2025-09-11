@@ -86,20 +86,20 @@ table th, table td { padding:5px; border-bottom:1px solid #00ff99; }
     <div class="secret-box" style="display:block;">
       <p class="secret-title">[1] Hidden Links</p>
       <ul>
-        <li>http://xxxxxxx.onion/market (ダミー)</li>
-        <li>http://xxxxxxx.onion/forum (ダミー)</li>
-        <li>http://xxxxxxx.onion/files (ダミー)</li>
+        <li>http://xxxxxxx.onion/market </li>
+        <li>http://xxxxxxx.onion/forum </li>
+        <li>http://xxxxxxx.onion/files </li>
       </ul>
     </div>
 
     <div class="secret-box" style="display:block;">
       <p class="secret-title">[2] Messages</p>
-      <p>ここに秘密メッセージが流れる…かも。</p>
+      <p>your new adress nunarezi@adadad.uk</p>
     </div>
 
     <div class="secret-box" style="display:block;">
       <p class="secret-title">[3] Status</p>
-      <p>サーバー状態: ONLINE ✅</p>
+      <p>サーバー状態: ONLINE </p>
       <p>接続ノード: 3</p>
     </div>
 
