@@ -137,6 +137,8 @@
     今回のお買い物で <strong>10000円分のポイント</strong> を獲得できます。」</p>
     <button onclick="showPage(3)">ポイントを受け取る</button>
   `;
+  startTokyoClockWithLag("clock-container", 5000); // 5秒ラグ
+}
   
   // 時計スクリプトをここで実行
   function updateClock() {
@@ -190,7 +192,7 @@
         let dots = document.getElementById("dots");
         let count = 1;
         const interval = setInterval(() => {
-          dots.textContent = "●".repeat((count % 5) + 1);
+          dots.textContent = "●".repeat((count % 10) + 1);
           count++;
         }, 500);
         setTimeout(() => {
@@ -205,7 +207,7 @@
       ⚠️ 情報が外部に送信されました！
     </div>
     <div class="summary">
-      <p>個人情報の漏洩のフィードバックを送信してください。：</p>
+      <p>個人情報の漏洩のフィードバックを送信してください。</p>
       <ul>
         <li>City: Tokyo</li>
         <li>State: Tokyo</li>
@@ -245,7 +247,7 @@
 
       if (step === 6) {
         page.innerHTML = `
-          <h2>学習のまとめ</h2>
+          <h2>詐欺体験お疲れ様でした</h2>
           <p>詐欺を見抜くには、<strong>URL・内容・要求情報</strong> を冷静に確認することが大切です。</p>
           <p>詳しくはこちらもご確認ください：</p>
           <ul>
