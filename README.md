@@ -1,9 +1,8 @@
-<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>○×ゲーム 完全版</title>
+<title>○×ゲーム Sona</title>
 <style>
 body {
   margin:0; padding:0;
@@ -24,7 +23,7 @@ h1 { margin:10px 0; text-shadow:2px 2px #000; }
 </style>
 </head>
 <body>
-<h1>○×ゲーム 完全版</h1>
+<h1>○×ゲーム　Sona</h1>
 <div id="controls">
   <label>盤面:
     <select id="sizeSelect">
