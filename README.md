@@ -56,14 +56,14 @@ table th, table td { padding:5px; border-bottom:1px solid #00ff99; }
 
   <!-- Home -->
   <div id="home" class="page">
-    <p>Welcome! トップページです。</p>
+    <p>Welcome! </p>
   </div>
 
   <!-- Login -->
   <div id="login" class="page" style="display:none;">
     <input type="text" placeholder="Username"><br>
     <input type="password" placeholder="Password"><br>
-    <button onclick="alert('ダミーです！ログインはありません。'); showPage('dashboard')">Login</button>
+    <button onclick="alert('Login successful。'); showPage('dashboard')">Login</button>
   </div>
 
   <!-- Register -->
@@ -71,7 +71,7 @@ table th, table td { padding:5px; border-bottom:1px solid #00ff99; }
     <input type="text" placeholder="Username"><br>
     <input type="email" placeholder="Email"><br>
     <input type="password" placeholder="Password"><br>
-    <button onclick="alert('ダミーです！登録はできません。')">Register</button>
+    <button onclick="alert('Registration successful。')">Register</button>
   </div>
 
   <!-- About -->
@@ -158,7 +158,7 @@ function fakeDownload(el){
   const progress = el.nextElementSibling.querySelector('.progress');
   let width=0;
   const interval=setInterval(()=>{
-    if(width>=100){ clearInterval(interval); alert("⚠️ ダミーです！"); }
+    if(width>=100){ clearInterval(interval); alert("⚠successful"); }
     else { width+=10; progress.style.width=width+"%"; }
   },200);
 }
