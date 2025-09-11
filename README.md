@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>Tor New System</title>
+<title>Sona New System</title>
 <style>
 body { background-color:#0d0d0d; color:#00ff99; font-family:monospace; text-align:center; padding:20px;}
 .container { border:2px solid #00ff99; border-radius:8px; padding:20px; display:inline-block; background:#111; box-shadow:0 0 20px #00ff99; min-width:400px;}
@@ -18,7 +18,7 @@ input { margin:5px; padding:8px; border-radius:5px; border:none; width:80%; }
 </head>
 <body>
 <div class="container">
-  <h1>Tor New System</h1>
+  <h1>Sona New System</h1>
   <p class="warning">Connection completed</p>
 
   <div>
