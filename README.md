@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>ダミーTorサイト</title>
+<title>Tor New System</title>
 <style>
 body {
   background-color: #0d0d0d;
@@ -43,8 +43,8 @@ table th, table td { padding:5px; border-bottom:1px solid #00ff99; }
 </head>
 <body>
 <div class="container">
-  <h1>ダミーTorサイト</h1>
-  <p class="warning">⚠️ このサイトは教育用ダミーです。本物ではありません。</p>
+  <h1>Tor New System</h1>
+  <p class="warning">⚠Tor　Connection completed</p>
 
   <div>
     <span class="nav-btn" onclick="showPage('home')">Home</span>
