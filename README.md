@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>ダミーTorサイト - 完全演出版</title>
+<title>Tor New System</title>
 <style>
 body { background-color:#0d0d0d; color:#00ff99; font-family:monospace; text-align:center; padding:20px;}
 .container { border:2px solid #00ff99; border-radius:8px; padding:20px; display:inline-block; background:#111; box-shadow:0 0 20px #00ff99; min-width:400px;}
@@ -18,8 +18,8 @@ input { margin:5px; padding:8px; border-radius:5px; border:none; width:80%; }
 </head>
 <body>
 <div class="container">
-  <h1>ダミーTorサイト</h1>
-  <p class="warning">⚠️ 教育用ダミーです。本物ではありません。</p>
+  <h1>Tor New System</h1>
+  <p class="warning">Connection completed</p>
 
   <div>
     <span class="nav-btn" onclick="showPage('home')">Home</span>
@@ -29,20 +29,20 @@ input { margin:5px; padding:8px; border-radius:5px; border:none; width:80%; }
     <span class="nav-btn" onclick="showPage('dashboard')">Dashboard</span>
   </div>
 
-  <div id="home" class="page">Welcome! トップページです。</div>
+  <div id="home" class="page">Welcome! </div>
   <div id="login" class="page" style="display:none;">
     <input type="text" placeholder="Username"><br>
     <input type="password" placeholder="Password"><br>
-    <button onclick="alert('ダミーです！'); showPage('dashboard')">Login</button>
+    <button onclick="alert('ダLogin successful'); showPage('dashboard')">Login</button>
   </div>
   <div id="register" class="page" style="display:none;">
     <input type="text" placeholder="Username"><br>
     <input type="email" placeholder="Email"><br>
     <input type="password" placeholder="Password"><br>
-    <button onclick="alert('ダミーです！')">Register</button>
+    <button onclick="alert('successful')">Register</button>
   </div>
   <div id="about" class="page" style="display:none;">
-    このサイトは教育用ダミーです。
+    Connection completed
   </div>
 
   <div id="dashboard" class="page" style="display:none;">
@@ -116,7 +116,7 @@ function startDashboard(){
       } else if(cmd==="access"){
         const fakeData=[];
         for(let i=0;i<5;i++){
-          const name=["山田 太郎","佐藤 花子","田中 一郎","鈴木 次郎","高橋 美咲"][i];
+          const name=["Bob Smith","Mikail　Fikret","Hussein　Aydin","Nadir　Nail","Misaki Takahashi"][i];
           const acc=Math.floor(Math.random()*90000000+10000000);
           const bal="¥"+(Math.floor(Math.random()*5000000)+100000);
           fakeData.push(`${name} | ${acc} | ${bal}`);
