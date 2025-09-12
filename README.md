@@ -2,357 +2,248 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hidden iOS Boot</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
       height: 100vh;
-      width: 100vw;
+      background: url('https://i.ibb.co/6bJjz9w/ios-wallpaper.jpg') no-repeat center center/cover;
       font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
       overflow: hidden;
-      background: black;
     }
 
-    /* 起動アニメーション */
-    #boot-screen {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: black;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      z-index: 10;
-      animation: fadeOut 1s ease forwards;
-      animation-delay: 5s;
-    }
-
-    .noise {
-      font-size: 16px;
-      color: #0f0;
-      text-shadow: 0 0 5px #0f0;
-      animation: flicker 0.1s infinite;
-    }
-
-    @keyframes flicker {
-      0%, 100% { opacity: 0.2; }
-      50% { opacity: 1; }
-    }
-
-    .apple {
-      font-size: 80px;
-      color: white;
-      opacity: 0;
-      animation: showApple 2s ease forwards;
-      animation-delay: 2s;
-    }
-
-    @keyframes showApple {
-      to { opacity: 1; }
-    }
-
-    @keyframes fadeOut {
-      to { opacity: 0; visibility: hidden; }
-    }
-
-    /* ホーム画面 */
-    #home-screen {
-      height: 100%;
+    .home-screen {
       width: 100%;
-      background: linear-gradient(135deg, #1c1c3c, #4a2f6e, #1b395d);
+      height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      opacity: 0;
-      animation: fadeIn 1s ease forwards;
-      animation-delay: 6s;
+      padding: 20px;
+      box-sizing: border-box;
     }
 
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-
-    .home {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-gap: 20px;
-      padding: 40px 20px 100px;
-      text-align: center;
-      flex-grow: 1;
-    }
-
-    .icon {
+    /* ステータスバー */
+    .status-bar {
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
       align-items: center;
-      cursor: pointer;
+      color: white;
+      font-size: 14px;
+      text-shadow: 0 1px 2px black;
+      margin-bottom: 20px;
+    }
+    .status-left {
+      margin-left: 10px;
+    }
+    .status-right {
+      margin-right: 10px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
     }
 
-    .icon div {
-      width: 70px;
-      height: 70px;
-      border-radius: 20px;
-      background: #444;
-      color: white;
+    /* 電源ボタン */
+    .top-bar {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: -20px;
+    }
+
+    .power-button {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 0, 0, 0.8);
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 30px;
-      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
-      margin-bottom: 5px;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+    }
+
+    /* アプリグリッド */
+    .app-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 25px 15px;
+      justify-items: center;
+    }
+
+    .app {
+      width: 65px;
+      height: 65px;
+      border-radius: 20px;
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 28px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+      cursor: pointer;
       transition: transform 0.2s;
     }
 
-    .icon div:active {
+    .app:active {
       transform: scale(0.9);
     }
 
     .label {
+      text-align: center;
       font-size: 12px;
+      margin-top: 5px;
       color: white;
+      text-shadow: 0 1px 2px black;
     }
 
+    /* Dock */
     .dock {
-      position: absolute;
-      bottom: 15px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 90%;
-      height: 80px;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 25px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 20px;
+      padding: 8px 20px;
       display: flex;
       justify-content: space-around;
       align-items: center;
-      backdrop-filter: blur(20px);
     }
 
-    .dock .icon div {
-      width: 60px;
-      height: 60px;
-      font-size: 26px;
+    .dock .app {
+      width: 55px;
+      height: 55px;
     }
 
-    /* ポップアップ共通 */
-    .popup {
+    /* 電源OFF画面 */
+    .power-off-screen {
       position: fixed;
-      top: 100%;
+      top: 0;
       left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.95);
+      width: 100%;
+      height: 100%;
+      background: black;
       display: flex;
       flex-direction: column;
+      justify-content: center;
+      align-items: center;
       color: white;
-      z-index: 20;
-      padding: 20px;
+      font-size: 20px;
+      z-index: 9999;
       opacity: 0;
-      transition: all 0.5s ease;
-      overflow-y: auto;
+      visibility: hidden;
+      transition: opacity 0.5s;
     }
 
-    .popup.active {
-      top: 0;
+    .power-off-screen.active {
       opacity: 1;
+      visibility: visible;
     }
 
-    .popup h2 {
-      margin: 10px 0;
-    }
-
-    .popup button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
+    .slide {
       background: #444;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    /* Cipher Tool 専用 */
-    #cipher-tool textarea {
-      width: 80%;
-      height: 100px;
-      border-radius: 8px;
-      padding: 10px;
-      margin-top: 10px;
-      font-size: 16px;
-      border: none;
-    }
-
-    #cipher-tool .btns {
-      margin-top: 15px;
-      display: flex;
-      gap: 15px;
-    }
-
-    /* 設定画面 */
-    #settings .option {
-      background: #222;
-      padding: 15px;
-      margin: 8px 0;
-      border-radius: 10px;
+      border-radius: 50px;
+      padding: 10px 30px;
       font-size: 18px;
-      cursor: pointer;
-    }
-
-    .subscreen {
-      display: none;
-    }
-
-    .subscreen.active {
-      display: block;
-    }
-
-    .back {
-      color: #0af;
-      cursor: pointer;
       margin-bottom: 20px;
-      display: inline-block;
     }
   </style>
 </head>
 <body>
-  <!-- 起動アニメーション -->
-  <div id="boot-screen">
-    <div class="noise">[ 起動シーケンス開始... ]</div>
-    <div class="apple"></div>
-  </div>
-
-  <!-- ホーム画面 -->
-  <div id="home-screen">
-    <div class="home">
-      <div class="icon" onclick="openPopup('system-alert')"><div>⚠️</div><div class="label">System Alert</div></div>
-      <div class="icon" onclick="openPopup('cipher-tool')"><div>🔒</div><div class="label">Cipher Tool</div></div>
+  <div class="home-screen">
+    <!-- ステータスバー -->
+    <div class="status-bar">
+      <div class="status-left" id="time">9:41</div>
+      <div class="status-right">
+        📶 LTE 🔋100%
+      </div>
     </div>
+
+    <!-- 電源ボタン -->
+    <div class="top-bar">
+      <div class="power-button" onclick="showPowerOff()">⏻</div>
+    </div>
+
+    <!-- アプリグリッド -->
+    <div class="app-grid">
+      <div>
+        <div class="app" style="background:#007AFF;">⚡</div>
+        <div class="label">System Boot</div>
+      </div>
+      <div>
+        <div class="app" style="background:#FF3B30;">⚠️</div>
+        <div class="label">System Alert</div>
+      </div>
+      <div>
+        <div class="app" style="background:#34C759;">🔒</div>
+        <div class="label">Cipher Tool</div>
+      </div>
+      <div>
+        <div class="app" style="background:#5856D6;">📂</div>
+        <div class="label">Extras</div>
+      </div>
+    </div>
+
+    <!-- Dock -->
     <div class="dock">
-      <div class="icon" onclick="openPopup('settings')"><div>⚙️</div></div>
-      <div class="icon"><div>🌐</div></div>
-      <div class="icon"><div>💬</div></div>
-      <div class="icon"><div>⏻</div></div>
+      <div>
+        <div class="app" style="background:#8E8E93;">⚙️</div>
+        <div class="label">Settings</div>
+      </div>
+      <div>
+        <div class="app" style="background:#FF9500;">🌐</div>
+        <div class="label">Browser</div>
+      </div>
+      <div>
+        <div class="app" style="background:#34C759;">💬</div>
+        <div class="label">Messages</div>
+      </div>
+      <div>
+        <div class="app" style="background:#FF2D55;">📞</div>
+        <div class="label">Phone</div>
+      </div>
     </div>
   </div>
 
-  <!-- System Alert ポップアップ -->
-  <div id="system-alert" class="popup">
-    <h2>⚠️ システム侵入検知！</h2>
-    <p>不正アクセスが検出されました。</p>
-    <button onclick="closePopup('system-alert')">閉じる</button>
-  </div>
-
-  <!-- Cipher Tool ポップアップ -->
-  <div id="cipher-tool" class="popup">
-    <h2>🔒 Cipher Tool</h2>
-    <textarea id="cipher-input" placeholder="ここにテキストを入力"></textarea>
-    <div class="btns">
-      <button onclick="encrypt()">Encrypt</button>
-      <button onclick="decrypt()">Decrypt</button>
-    </div>
-    <textarea id="cipher-output" placeholder="結果がここに表示されます" readonly></textarea>
-    <button onclick="closePopup('cipher-tool')">閉じる</button>
-  </div>
-
-  <!-- 設定画面 -->
-  <div id="settings" class="popup">
-    <div id="main-settings" class="subscreen active">
-      <h2>⚙️ 設定</h2>
-      <div class="option" onclick="openSub('wifi')">Wi-Fi</div>
-      <div class="option" onclick="openSub('bt')">Bluetooth</div>
-      <div class="option" onclick="openSub('display')">画面表示と明るさ</div>
-      <div class="option" onclick="openSub('sound')">サウンドと触覚</div>
-      <div class="option" onclick="openSub('notify')">通知</div>
-      <div class="option" onclick="openSub('general')">一般</div>
-      <button onclick="closePopup('settings')">閉じる</button>
-    </div>
-
-    <div id="wifi" class="subscreen">
-      <span class="back" onclick="backToMain()">＜ 設定</span>
-      <h2>Wi-Fi</h2>
-      <p>利用可能なネットワーク：</p>
-      <ul>
-        <li>Home_Network</li>
-        <li>Cafe_WiFi</li>
-        <li>Free_Public_WiFi</li>
-      </ul>
-    </div>
-
-    <div id="bt" class="subscreen">
-      <span class="back" onclick="backToMain()">＜ 設定</span>
-      <h2>Bluetooth</h2>
-      <p>利用可能なデバイス：</p>
-      <ul>
-        <li>AirPods Pro</li>
-        <li>Keyboard_XYZ</li>
-        <li>Speaker_123</li>
-      </ul>
-    </div>
-
-    <div id="display" class="subscreen">
-      <span class="back" onclick="backToMain()">＜ 設定</span>
-      <h2>画面表示と明るさ</h2>
-      <p>ライト / ダークモードの切り替え</p>
-    </div>
-
-    <div id="sound" class="subscreen">
-      <span class="back" onclick="backToMain()">＜ 設定</span>
-      <h2>サウンドと触覚</h2>
-      <p>着信音、通知音の調整</p>
-    </div>
-
-    <div id="notify" class="subscreen">
-      <span class="back" onclick="backToMain()">＜ 設定</span>
-      <h2>通知</h2>
-      <p>アプリごとの通知許可</p>
-    </div>
-
-    <div id="general" class="subscreen">
-      <span class="back" onclick="backToMain()">＜ 設定</span>
-      <h2>一般</h2>
-      <p>情報、ソフトウェアアップデートなど</p>
-    </div>
+  <!-- 電源OFF画面 -->
+  <div class="power-off-screen" id="powerOffScreen">
+    <div class="slide">🔴 スライドで電源オフ</div>
+    <div>電源を切るにはスライドしてください</div>
   </div>
 
   <script>
-    function openPopup(id) {
-      document.getElementById(id).classList.add("active");
+    // フルスクリーン化
+    document.addEventListener("click", () => {
+      if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen();
+      }
+    }, { once: true });
+
+    // 電源オフ画面表示
+    function showPowerOff() {
+      const screen = document.getElementById("powerOffScreen");
+      screen.classList.add("active");
+      screen.addEventListener("click", powerOff);
     }
 
-    function closePopup(id) {
-      document.getElementById(id).classList.remove("active");
-      backToMain(); // 設定を閉じたら必ずメインに戻す
+    // 電源OFF → 黒画面
+    function powerOff() {
+      const screen = document.getElementById("powerOffScreen");
+      screen.innerHTML = "<div>電源OFF...</div>";
+      setTimeout(() => {
+        document.body.style.background = "black";
+        document.body.innerHTML = "";
+        window.close(); // ブラウザによっては無効
+      }, 2000);
     }
 
-    function openSub(id) {
-      document.querySelectorAll("#settings .subscreen").forEach(s => s.classList.remove("active"));
-      document.getElementById(id).classList.add("active");
+    // 時計をリアルタイムに更新
+    function updateTime() {
+      const now = new Date();
+      const hours = now.getHours().toString().padStart(2, '0');
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      document.getElementById("time").textContent = `${hours}:${minutes}`;
     }
-
-    function backToMain() {
-      document.querySelectorAll("#settings .subscreen").forEach(s => s.classList.remove("active"));
-      document.getElementById("main-settings").classList.add("active");
-    }
-
-    // シーザー暗号 (Shift 3)
-    function caesar(str, shift) {
-      return str.replace(/[a-z]/gi, c => {
-        let base = c === c.toLowerCase() ? 97 : 65;
-        return String.fromCharCode((c.charCodeAt(0) - base + shift + 26) % 26 + base);
-      });
-    }
-
-    function encrypt() {
-      let input = document.getElementById("cipher-input").value;
-      document.getElementById("cipher-output").value = caesar(input, 3);
-    }
-
-    function decrypt() {
-      let input = document.getElementById("cipher-input").value;
-      document.getElementById("cipher-output").value = caesar(input, -3);
-    }
+    setInterval(updateTime, 1000);
+    updateTime();
   </script>
 </body>
 </html>
