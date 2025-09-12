@@ -1,8 +1,9 @@
+<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Hidden iOS Boot</title>
+<title>裏iPhone風ホーム画面 完全版</title>
 <style>
 body {
   margin:0;
@@ -22,7 +23,7 @@ body {
   border-radius:40px;
   overflow:hidden;
   position:relative;
-  box-shadow:0 0 30px rgba(0,0,0,0.7);
+  box-shadow:0 0 40px rgba(0,0,0,0.7);
   background:url('https://i.ibb.co/wYV4zLb/ios-wallpaper.jpg') no-repeat center/cover;
 }
 
@@ -62,21 +63,21 @@ body {
 }
 
 .app img {
-  width: 60px;
-  height: 60px;
-  border-radius: 18px;
-  /* ここを追加 */
-  background: rgba(0,0,0,0.2); /* 半透明の暗め背景 */
-  padding: 5px;                 /* アイコン周りに余白 */
-  box-shadow: 0 2px 6px rgba(0,0,0,0.5); /* 影を強めて浮き上がらせる */
+  width:60px;
+  height:60px;
+  border-radius:18px;
+  background: rgba(0,0,0,0.25); /* 半透明背景 */
+  padding:5px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
 }
 
+/* ラベル */
 .label {
   font-size:11px;
   margin-top:4px;
   color:white;
   text-align:center;
-  text-shadow:0 1px 2px black;
+  text-shadow:0 1px 2px rgba(0,0,0,0.7);
 }
 
 /* Dock */
@@ -87,12 +88,13 @@ body {
   transform:translateX(-50%);
   width:90%;
   height:80px;
-  background:rgba(255,255,255,0.2);
+  background:rgba(255,255,255,0.15);
+  backdrop-filter:blur(20px);
   border-radius:30px;
   display:flex;
   justify-content:space-around;
   align-items:center;
-  backdrop-filter:blur(15px);
+  box-shadow:0 0 20px rgba(0,0,0,0.4);
 }
 
 .dock .app img { width:55px; height:55px; }
@@ -151,10 +153,11 @@ body {
 <div class="iphone">
   <div class="status-bar">
     <div id="time">9:41</div>
-    <div class="status-icons"><span>📶</span><span>📡</span><span>🔋80%</span></div>
+    <div class="status-icons"><span>📶</span><span>📡</span><span>🔋100%</span></div>
   </div>
 
   <div class="home">
+    <div class="app"><img src="https://img.icons8.com/ios-filled/50/ffffff/mac.png"><div class="label">Apple</div></div>
     <div class="app"><img src="https://img.icons8.com/ios-filled/50/ffffff/phone.png"><div class="label">Phone</div></div>
     <div class="app"><img src="https://img.icons8.com/ios-filled/50/ffffff/apple-mail.png"><div class="label">Mail</div></div>
     <div class="app"><img src="https://img.icons8.com/ios-filled/50/ffffff/camera.png"><div class="label">Camera</div></div>
@@ -166,7 +169,6 @@ body {
     <div class="app"><img src="https://img.icons8.com/ios-filled/50/ffffff/folder-invoices.png"><div class="label">Files</div></div>
     <div class="app"><img src="https://img.icons8.com/ios-filled/50/ffffff/settings.png"><div class="label">Settings</div></div>
     <div class="app"><img src="https://img.icons8.com/ios-filled/50/ffffff/shopping-cart.png"><div class="label">Store</div></div>
-    <div class="app"><img src="https://img.icons8.com/ios-filled/50/ffffff/flash-on.png"><div class="label">Flashlight</div></div>
   </div>
 
   <div class="dock">
@@ -214,10 +216,10 @@ function showError(){
   setTimeout(()=>{ e.style.display='none'; },3000);
 }
 
-// 簡単暗号化/複合化機能
+// 暗号化/複合化機能
 function encrypt(text,shift){ return text.split('').map(c=>String.fromCharCode(c.charCodeAt(0)+shift)).join(''); }
 function decrypt(text,shift){ return text.split('').map(c=>String.fromCharCode(c.charCodeAt(0)-shift)).join(''); }
-// 使い方例：
+// 使用例：
 // console.log(encrypt("HELLO",3));
 // console.log(decrypt("KHOOR",3));
 </script>
