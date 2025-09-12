@@ -106,9 +106,9 @@ body {
 /* ホーム画面 */
 .iphone {
   display:none;
-  background:url('<img width="1080" height="2338" alt="image" src="https://github.com/user-attachments/assets/6f06d6fd-afff-481e-8ec1-bafaf56008ce" />
-') no-repeat center/cover;
+  background:url('https://i.ibb.co/wYV4zLb/ios-wallpaper.jpg') no-repeat center/cover;
 }
+
 
 /* ステータスバー */
 .status-bar {
