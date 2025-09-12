@@ -15,7 +15,7 @@
       background: black;
     }
 
-    /* 起動アニメーション画面 */
+    /* 起動アニメーション */
     #boot-screen {
       position: absolute;
       top: 0; left: 0;
@@ -27,10 +27,9 @@
       flex-direction: column;
       z-index: 10;
       animation: fadeOut 1s ease forwards;
-      animation-delay: 5s; /* 5秒後にフェードアウト */
+      animation-delay: 5s;
     }
 
-    /* ノイズ風アニメーション */
     .noise {
       font-size: 16px;
       color: #0f0;
@@ -43,7 +42,6 @@
       50% { opacity: 1; }
     }
 
-    /* リンゴ風マーク */
     .apple {
       font-size: 80px;
       color: white;
@@ -70,7 +68,7 @@
       justify-content: space-between;
       opacity: 0;
       animation: fadeIn 1s ease forwards;
-      animation-delay: 6s; /* 起動後に表示 */
+      animation-delay: 6s;
     }
 
     @keyframes fadeIn {
@@ -90,6 +88,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      cursor: pointer;
     }
 
     .icon div {
@@ -104,6 +103,11 @@
       font-size: 30px;
       box-shadow: 0 5px 10px rgba(0,0,0,0.3);
       margin-bottom: 5px;
+      transition: transform 0.2s;
+    }
+
+    .icon div:active {
+      transform: scale(0.9);
     }
 
     .label {
@@ -131,6 +135,85 @@
       height: 60px;
       font-size: 26px;
     }
+
+    /* ポップアップ共通 */
+    .popup {
+      position: fixed;
+      top: 100%;
+      left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.95);
+      display: flex;
+      flex-direction: column;
+      color: white;
+      z-index: 20;
+      padding: 20px;
+      opacity: 0;
+      transition: all 0.5s ease;
+      overflow-y: auto;
+    }
+
+    .popup.active {
+      top: 0;
+      opacity: 1;
+    }
+
+    .popup h2 {
+      margin: 10px 0;
+    }
+
+    .popup button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background: #444;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    /* Cipher Tool 専用 */
+    #cipher-tool textarea {
+      width: 80%;
+      height: 100px;
+      border-radius: 8px;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+      border: none;
+    }
+
+    #cipher-tool .btns {
+      margin-top: 15px;
+      display: flex;
+      gap: 15px;
+    }
+
+    /* 設定画面 */
+    #settings .option {
+      background: #222;
+      padding: 15px;
+      margin: 8px 0;
+      border-radius: 10px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .subscreen {
+      display: none;
+    }
+
+    .subscreen.active {
+      display: block;
+    }
+
+    .back {
+      color: #0af;
+      cursor: pointer;
+      margin-bottom: 20px;
+      display: inline-block;
+    }
   </style>
 </head>
 <body>
@@ -143,17 +226,133 @@
   <!-- ホーム画面 -->
   <div id="home-screen">
     <div class="home">
-      <div class="icon"><div>⚡</div><div class="label">System Boot</div></div>
-      <div class="icon"><div>⚠️</div><div class="label">System Alert</div></div>
-      <div class="icon"><div>🔒</div><div class="label">Cipher Tool</div></div>
-      <div class="icon"><div>📂</div><div class="label">Extras</div></div>
+      <div class="icon" onclick="openPopup('system-alert')"><div>⚠️</div><div class="label">System Alert</div></div>
+      <div class="icon" onclick="openPopup('cipher-tool')"><div>🔒</div><div class="label">Cipher Tool</div></div>
     </div>
     <div class="dock">
-      <div class="icon"><div>⚙️</div></div>
+      <div class="icon" onclick="openPopup('settings')"><div>⚙️</div></div>
       <div class="icon"><div>🌐</div></div>
       <div class="icon"><div>💬</div></div>
       <div class="icon"><div>⏻</div></div>
     </div>
   </div>
+
+  <!-- System Alert ポップアップ -->
+  <div id="system-alert" class="popup">
+    <h2>⚠️ システム侵入検知！</h2>
+    <p>不正アクセスが検出されました。</p>
+    <button onclick="closePopup('system-alert')">閉じる</button>
+  </div>
+
+  <!-- Cipher Tool ポップアップ -->
+  <div id="cipher-tool" class="popup">
+    <h2>🔒 Cipher Tool</h2>
+    <textarea id="cipher-input" placeholder="ここにテキストを入力"></textarea>
+    <div class="btns">
+      <button onclick="encrypt()">Encrypt</button>
+      <button onclick="decrypt()">Decrypt</button>
+    </div>
+    <textarea id="cipher-output" placeholder="結果がここに表示されます" readonly></textarea>
+    <button onclick="closePopup('cipher-tool')">閉じる</button>
+  </div>
+
+  <!-- 設定画面 -->
+  <div id="settings" class="popup">
+    <div id="main-settings" class="subscreen active">
+      <h2>⚙️ 設定</h2>
+      <div class="option" onclick="openSub('wifi')">Wi-Fi</div>
+      <div class="option" onclick="openSub('bt')">Bluetooth</div>
+      <div class="option" onclick="openSub('display')">画面表示と明るさ</div>
+      <div class="option" onclick="openSub('sound')">サウンドと触覚</div>
+      <div class="option" onclick="openSub('notify')">通知</div>
+      <div class="option" onclick="openSub('general')">一般</div>
+      <button onclick="closePopup('settings')">閉じる</button>
+    </div>
+
+    <div id="wifi" class="subscreen">
+      <span class="back" onclick="backToMain()">＜ 設定</span>
+      <h2>Wi-Fi</h2>
+      <p>利用可能なネットワーク：</p>
+      <ul>
+        <li>Home_Network</li>
+        <li>Cafe_WiFi</li>
+        <li>Free_Public_WiFi</li>
+      </ul>
+    </div>
+
+    <div id="bt" class="subscreen">
+      <span class="back" onclick="backToMain()">＜ 設定</span>
+      <h2>Bluetooth</h2>
+      <p>利用可能なデバイス：</p>
+      <ul>
+        <li>AirPods Pro</li>
+        <li>Keyboard_XYZ</li>
+        <li>Speaker_123</li>
+      </ul>
+    </div>
+
+    <div id="display" class="subscreen">
+      <span class="back" onclick="backToMain()">＜ 設定</span>
+      <h2>画面表示と明るさ</h2>
+      <p>ライト / ダークモードの切り替え</p>
+    </div>
+
+    <div id="sound" class="subscreen">
+      <span class="back" onclick="backToMain()">＜ 設定</span>
+      <h2>サウンドと触覚</h2>
+      <p>着信音、通知音の調整</p>
+    </div>
+
+    <div id="notify" class="subscreen">
+      <span class="back" onclick="backToMain()">＜ 設定</span>
+      <h2>通知</h2>
+      <p>アプリごとの通知許可</p>
+    </div>
+
+    <div id="general" class="subscreen">
+      <span class="back" onclick="backToMain()">＜ 設定</span>
+      <h2>一般</h2>
+      <p>情報、ソフトウェアアップデートなど</p>
+    </div>
+  </div>
+
+  <script>
+    function openPopup(id) {
+      document.getElementById(id).classList.add("active");
+    }
+
+    function closePopup(id) {
+      document.getElementById(id).classList.remove("active");
+      backToMain(); // 設定を閉じたら必ずメインに戻す
+    }
+
+    function openSub(id) {
+      document.querySelectorAll("#settings .subscreen").forEach(s => s.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+    }
+
+    function backToMain() {
+      document.querySelectorAll("#settings .subscreen").forEach(s => s.classList.remove("active"));
+      document.getElementById("main-settings").classList.add("active");
+    }
+
+    // シーザー暗号 (Shift 3)
+    function caesar(str, shift) {
+      return str.replace(/[a-z]/gi, c => {
+        let base = c === c.toLowerCase() ? 97 : 65;
+        return String.fromCharCode((c.charCodeAt(0) - base + shift + 26) % 26 + base);
+      });
+    }
+
+    function encrypt() {
+      let input = document.getElementById("cipher-input").value;
+      document.getElementById("cipher-output").value = caesar(input, 3);
+    }
+
+    function decrypt() {
+      let input = document.getElementById("cipher-input").value;
+      document.getElementById("cipher-output").value = caesar(input, -3);
+    }
+  </script>
 </body>
 </html>
