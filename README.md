@@ -220,7 +220,7 @@ body {
 <div class="iphone">
   <div class="status-bar">
     <div id="time">9:41</div>
-    <div class="status-icons"><span>📶</span><span>📡</span><span>🔋100%</span></div>
+    <div class="status-icons"><span>📶</span><span>📡</span><span>🔋80%</span></div>
   </div>
 
   <div class="home">
