@@ -21,9 +21,8 @@ body {
 #boot-screen,
 .iphone {
   position: relative;
-  width: 100%;
-  max-width: 375px;
-  aspect-ratio: 375/812;
+  width: 100vw;   /* 横幅いっぱい */
+  height: 100vh;  /* 高さいっぱい */
   border-radius: 40px;
   overflow: hidden;
   display: flex;
@@ -220,7 +219,7 @@ body {
 <div class="iphone">
   <div class="status-bar">
     <div id="time">9:41</div>
-    <div class="status-icons"><span>📶</span><span>📡</span><span>🔋80%</span></div>
+    <div class="status-icons"><span>📶</span><span>📡</span><span>🔋89%</span></div>
   </div>
 
   <div class="home">
@@ -238,7 +237,7 @@ body {
 
 <script>
 // パスワード管理
-const correctPwd = "0000";
+const correctPwd = "4246";
 let entered = "";
 
 function addDigit(d){
