@@ -62,10 +62,13 @@ body {
 }
 
 .app img {
-  width:60px;
-  height:60px;
-  border-radius:18px;
-  box-shadow:0 2px 5px rgba(0,0,0,0.3);
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
+  /* ここを追加 */
+  background: rgba(0,0,0,0.2); /* 半透明の暗め背景 */
+  padding: 5px;                 /* アイコン周りに余白 */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5); /* 影を強めて浮き上がらせる */
 }
 
 .label {
