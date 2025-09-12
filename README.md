@@ -1,252 +1,144 @@
-
+<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Hidden iOS Boot</title>
   <style>
     body {
       margin: 0;
+      background: url('https://i.ibb.co/wYV4zLb/ios-wallpaper.jpg') no-repeat center center/cover;
       height: 100vh;
+      width: 100vw;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: #000;
-      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
-      overflow: hidden;
     }
-
-    /* スマホの本体サイズ再現 */
-    .phone {
-      width: 375px;   /* iPhone X の画面幅 */
-      height: 812px;  /* iPhone X の画面高さ */
+    .iphone {
+      width: 375px; /* iPhoneの標準幅 */
+      height: 812px; /* iPhone X以降の高さ */
+      border: 2px solid #000;
       border-radius: 40px;
       overflow: hidden;
+      box-shadow: 0 0 30px rgba(0,0,0,0.6);
       position: relative;
-      box-shadow: 0 0 20px rgba(0,0,0,0.8);
-      background: url('https://i.ibb.co/J7rX2Pg/ios-default-wallpaper.jpg') no-repeat center center/cover;
+      background: url('https://i.ibb.co/wYV4zLb/ios-wallpaper.jpg') no-repeat center center/cover;
     }
-
-    .home-screen {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 20px;
-      box-sizing: border-box;
-    }
-
     /* ステータスバー */
     .status-bar {
+      height: 24px;
+      background: rgba(0,0,0,0.2);
+      color: white;
+      font-size: 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      color: white;
-      font-size: 14px;
-      text-shadow: 0 1px 2px black;
-      margin-top: 5px;
+      padding: 0 8px;
+      font-family: sans-serif;
     }
-    .status-right {
+    .status-icons {
       display: flex;
       gap: 8px;
-      align-items: center;
     }
-
-    /* 電源ボタン */
-    .top-bar {
-      display: flex;
-      justify-content: flex-end;
-      margin-top: 5px;
-    }
-
-    .power-button {
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
-      background: rgba(255, 0, 0, 0.8);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      font-size: 18px;
-      cursor: pointer;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.4);
-    }
-
-    /* アプリグリッド */
-    .app-grid {
+    /* ホーム画面 */
+    .home {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 25px 10px;
-      justify-items: center;
-      margin-top: 20px;
+      grid-template-rows: repeat(6, 1fr);
+      gap: 15px;
+      padding: 40px 20px 100px 20px;
+      box-sizing: border-box;
+      height: calc(100% - 24px);
     }
-
     .app {
       width: 60px;
       height: 60px;
       border-radius: 15px;
-      background: #fff;
+      background: rgba(255,255,255,0.2);
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 26px;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.3);
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-
-    .app:active {
-      transform: scale(0.9);
-    }
-
-    .label {
-      text-align: center;
-      font-size: 11px;
-      margin-top: 4px;
+      font-size: 12px;
       color: white;
-      text-shadow: 0 1px 2px black;
+      text-align: center;
+      backdrop-filter: blur(10px);
     }
-
     /* Dock */
     .dock {
-      background: rgba(255, 255, 255, 0.25);
-      border-radius: 20px;
-      padding: 8px 15px;
+      position: absolute;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      height: 80px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 30px;
       display: flex;
       justify-content: space-around;
       align-items: center;
-      margin-bottom: 10px;
+      backdrop-filter: blur(15px);
     }
-
     .dock .app {
       width: 55px;
       height: 55px;
     }
-
-    /* 電源OFF画面 */
-    .power-off-screen {
+    /* 電源ボタン */
+    .power-btn {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: black;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      font-size: 20px;
-      z-index: 9999;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.5s;
-    }
-
-    .power-off-screen.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .slide {
+      top: 10px;
+      right: -40px;
+      width: 20px;
+      height: 60px;
       background: #444;
-      border-radius: 50px;
-      padding: 10px 30px;
-      font-size: 18px;
-      margin-bottom: 20px;
+      border-radius: 10px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <div class="phone">
-    <div class="home-screen">
-      <!-- ステータスバー -->
-      <div class="status-bar">
-        <div id="time">9:41</div>
-        <div class="status-right">
-          📶 LTE 🔋100%
-        </div>
-      </div>
-
-      <!-- 電源ボタン -->
-      <div class="top-bar">
-        <div class="power-button" onclick="showPowerOff()">⏻</div>
-      </div>
-
-      <!-- アプリグリッド -->
-      <div class="app-grid">
-        <div>
-          <div class="app" style="background:#007AFF;">⚡</div>
-          <div class="label">System Boot</div>
-        </div>
-        <div>
-          <div class="app" style="background:#FF3B30;">⚠️</div>
-          <div class="label">Alert</div>
-        </div>
-        <div>
-          <div class="app" style="background:#34C759;">🔒</div>
-          <div class="label">Cipher</div>
-        </div>
-        <div>
-          <div class="app" style="background:#5856D6;">📂</div>
-          <div class="label">Extras</div>
-        </div>
-      </div>
-
-      <!-- Dock -->
-      <div class="dock">
-        <div>
-          <div class="app" style="background:#8E8E93;">⚙️</div>
-          <div class="label">Settings</div>
-        </div>
-        <div>
-          <div class="app" style="background:#FF9500;">🌐</div>
-          <div class="label">Browser</div>
-        </div>
-        <div>
-          <div class="app" style="background:#34C759;">💬</div>
-          <div class="label">Messages</div>
-        </div>
-        <div>
-          <div class="app" style="background:#FF2D55;">📞</div>
-          <div class="label">Phone</div>
-        </div>
+  <div class="iphone">
+    <!-- ステータスバー -->
+    <div class="status-bar">
+      <div class="time" id="time">9:41</div>
+      <div class="status-icons">
+        <span>📶</span>
+        <span>📡</span>
+        <span>🔋100%</span>
       </div>
     </div>
-
-    <!-- 電源OFF画面 -->
-    <div class="power-off-screen" id="powerOffScreen">
-      <div class="slide">🔴 スライドで電源オフ</div>
-      <div>電源を切るにはスライドしてください</div>
+    <!-- ホーム画面 -->
+    <div class="home">
+      <div class="app">📞</div>
+      <div class="app">💬</div>
+      <div class="app">📷</div>
+      <div class="app">🎵</div>
+      <div class="app">🌐</div>
+      <div class="app">📺</div>
+      <div class="app">📝</div>
+      <div class="app">🕹️</div>
+      <div class="app">📂</div>
+      <div class="app">⚙️</div>
+      <div class="app">🛒</div>
+      <div class="app">💡</div>
     </div>
+    <!-- Dock -->
+    <div class="dock">
+      <div class="app">📞</div>
+      <div class="app">💬</div>
+      <div class="app">🌐</div>
+      <div class="app">🎵</div>
+    </div>
+    <!-- 電源ボタン -->
+    <div class="power-btn" onclick="window.close()"></div>
   </div>
 
   <script>
-    // 電源オフ画面表示
-    function showPowerOff() {
-      const screen = document.getElementById("powerOffScreen");
-      screen.classList.add("active");
-      screen.addEventListener("click", powerOff);
-    }
-
-    // 電源OFF → 黒画面
-    function powerOff() {
-      const screen = document.getElementById("powerOffScreen");
-      screen.innerHTML = "<div>電源OFF...</div>";
-      setTimeout(() => {
-        document.body.style.background = "black";
-        document.body.innerHTML = "";
-      }, 2000);
-    }
-
-    // 時計をリアルタイムに更新
     function updateTime() {
       const now = new Date();
-      const hours = now.getHours().toString().padStart(2, '0');
-      const minutes = now.getMinutes().toString().padStart(2, '0');
-      document.getElementById("time").textContent = `${hours}:${minutes}`;
+      let h = now.getHours();
+      let m = now.getMinutes();
+      if (m < 10) m = "0" + m;
+      document.getElementById("time").textContent = h + ":" + m;
     }
     setInterval(updateTime, 1000);
     updateTime();
