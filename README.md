@@ -1,31 +1,45 @@
+<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Hidden iOS Boot</title>
+<title>裏iPhone風ホーム 完全版</title>
 <style>
 body {
-  margin:0;
-  background:#000;
-  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-  overflow:hidden;
+  margin: 0;
+  background: #000;
+  font-family: -apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+/* iPhoneコンテナ共通 */
+#password-screen,
+#boot-screen,
+.iphone {
+  position: relative;
+  width: 100%;
+  max-width: 375px;
+  aspect-ratio: 375/812;
+  border-radius: 40px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 40px rgba(0,0,0,0.7);
+  background-size: cover;
+  background-position: center;
 }
 
 /* パスワード画面 */
 #password-screen {
-  position:absolute;
-  width:375px;
-  height:812px;
-  background:#111;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  color:white;
+  background: #111;
+  color: white;
 }
 
 #password-screen h1 {
@@ -72,9 +86,6 @@ body {
 
 /* 起動アニメーション */
 #boot-screen {
-  position:absolute;
-  width:375px;
-  height:812px;
   background:black;
   color:#0f0;
   font-family:monospace;
@@ -96,14 +107,8 @@ body {
 
 /* ホーム画面 */
 .iphone {
-  width:375px;
-  height:812px;
-  border-radius:40px;
-  overflow:hidden;
-  position:relative;
   display:none;
   background:url('https://i.ibb.co/wYV4zLb/ios-wallpaper.jpg') no-repeat center/cover;
-  box-shadow:0 0 40px rgba(0,0,0,0.7);
 }
 
 /* ステータスバー */
@@ -176,6 +181,7 @@ body {
 }
 
 .dock .app img { width:55px; height:55px; }
+
 </style>
 </head>
 <body>
